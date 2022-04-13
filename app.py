@@ -17,15 +17,16 @@ def index():
     if request.method == 'POST':
         try:
             searchString = request.form['content'].replace(" ","")
-            flipkart_url = "https://www.flipkart.com/search?q=" + searchString
-            uClient = uReq(flipkart_url)
+            flipkart_url = "#https://www.flipkart.com/search?q=" + searchString  #https://www.amazon.in/?tag=msndeskabkin-21&hvadid=
+            uClient = uReq(flipkart_url)                                 #https://www.amazon.com/search?q=
+
             flipkartPage = uClient.read()
             uClient.close()
             flipkart_html = bs(flipkartPage, "html.parser")
             bigboxes = flipkart_html.findAll("div", {"class": "_1AtVbE col-12-12"})
             del bigboxes[0:3]
             box = bigboxes[0]
-            productLink = "https://www.flipkart.com" + box.div.div.div.a['href']
+            productLink = "https://www.flipkart.com" + box.div.div.div.a['href']#"https://www.flipkart.com"
             prodRes = requests.get(productLink)
             prodRes.encoding='utf-8'
             prod_html = bs(prodRes.text, "html.parser")
